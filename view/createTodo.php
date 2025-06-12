@@ -9,9 +9,7 @@
         header('location: ./signin.php');
         exit();
     }
-
-
-
+    
     // Si le chargement de cette ressource fait suite à la soumission du formulaire, alor on autorise le traitement des données.
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ok'])) {
 
@@ -21,8 +19,21 @@
             'description' => FILTER_SANITIZE_FULL_SPECIAL_CHARS
         ]);
 
+        // Je récupèrer les valeur de $_POST et celle qui manquent (createdAt par exemple) dans des variable
+        $title = $_POST['title'] ?? '';
+        $description = $_POST['description'] ?? '';
+
+        // Vérifier les champ requi pour gérer les eurreurs
+        if(!$title){
+            $errors['title'] = ERROR_REQUIRED;
+        }
+        if(!$description){
+            $errors['description'] = ERROR_REQUIRED;
+        }
+
+
         // Au chargement de la page, je souhaite envoyer une requète de type SELECT pour afficher le titre et la description dans le formulaire.
-        $sql = "SELECT * FROM todo WHERE title = :title, description = :description;";
+        $sql = "INSERT INTO todo (title, description) Value(':title', ':description');";
 
         // Je verifie si j'ai accés à une instance de connexion PDO
         if (isset($db_connexion)) {
@@ -36,34 +47,6 @@
         // Je l'exécute
         $statement->execute();
 
-        // Je récupère l'UNIQUE résultat de ma requète
-        $todo = $statement->fetch();
-
-        // je recupère le title et la description du todo
-        $title = $todo['title'];
-        $description = $todo['description'];
-
-
-        // Je récupèrer les valeur de $_POST et celle qui manquent (createdAt par exemple) dans des variable
-        $title = $_POST['title'];
-        $description = $_POST['description'];
-
-        // Ecrire la requète SQL de type CREATE
-        $sql = 'CREATE * FROM todo WHERE title = :title, description = :description;';
-
-        // La préparer
-        if (isset($db_connexion)) {
-            $statement = $db_connexion->prepare($sql);
-        }
-
-        // Associer les paramètres avecc les variable
-        $statement->bindParam(':title', $title);
-        $statement->bindParam(':description', $description);
-        // $statement->bindParam(':idTodo', $idTodo);
-
-        // Envoyer la requète 
-        $statement->execute();
-
         // Si tout est ok, faire la redirection
         $nb = $statement->rowCount();       
         if ($nb === 1) {
@@ -71,8 +54,6 @@
             exit();
         }
     }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -87,16 +68,15 @@
     <form action="#" method="POST">
         <div>
             <label for="idTitle">Titre</label>
-            <input type="text" id="idTitle" name="title" value="<?= htmlspecialchars($title); ?>" required> 
+            <input type="text" id="idTitle" name="title" required> 
         </div>
         <div>
             <label for="idDescription">Description</label>
-            <textarea name="description" id="idDescription" cols="50" rows="10" required><?= htmlspecialchars($description); ?></textarea>
+            <textarea name="description" id="idDescription" cols="50" rows="10" required></textarea>
         </div>
         <div>
             <input type="submit" name="ok">
         </div>
-
     </form>
 </body>
 </html>

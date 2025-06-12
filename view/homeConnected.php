@@ -53,7 +53,7 @@
 
     <section id="todoArea">
         <div id="todoRow">
-            <a href="./readTodo.php?id=6">titre 1</a>
+            <a href="./readTodo.php?id=2">titre 1</a>
             <div> 
                 <a href="./updateTodo.php?id=6"><img src="../img/plume.png" alt="logo editer le todo"></a>
                 <a href="./deleteTodo.php?id=6"><img src="../img/poubelle.png" alt="Logo suppression todo"></a>
