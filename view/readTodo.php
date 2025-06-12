@@ -55,7 +55,7 @@ session_start();
 </head>
 <body>
     <header>
-        <?php require_once './component/navBar.php';?>
+        <?php require_once './compenent/navBar.php';?>
     </header>
 
     <?= $htmlArticle; ?>

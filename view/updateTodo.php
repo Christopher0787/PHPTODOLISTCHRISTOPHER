@@ -92,7 +92,7 @@
         </div>
         <div>
             <label for="idDescription">Description</label>
-            <textarea name="description" id="idDescription" cols="50" rows="10" required><?= htmlspecialchars($title); ?></textarea>
+            <textarea name="description" id="idDescription" cols="50" rows="10" required><?= htmlspecialchars($description); ?></textarea>
         </div>
         <div>
             <input type="submit" name="ok">
