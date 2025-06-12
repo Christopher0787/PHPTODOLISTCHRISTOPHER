@@ -23,6 +23,8 @@
         $title = $_POST['title'] ?? '';
         $description = $_POST['description'] ?? '';
 
+        $idTodo = $_SESSION['userId'];
+
         // Vérifier les champ requi pour gérer les eurreurs
         if(!$title){
             $errors['title'] = ERROR_REQUIRED;
@@ -33,7 +35,7 @@
 
 
         // Au chargement de la page, je souhaite envoyer une requète de type SELECT pour afficher le titre et la description dans le formulaire.
-        $sql = "INSERT INTO todo (title, description) Value(':title', ':description');";
+        $sql = "INSERT INTO todo (title, description, author) Values(:title, :description, :id);";
 
         // Je verifie si j'ai accés à une instance de connexion PDO
         if (isset($db_connexion)) {
@@ -41,8 +43,9 @@
         }
 
         // J'associe les paramètres nommées avec les bonnes variables
-        $statement->bindParam(':idtitle', $title);
-        $statement->bindParam(':iddescription', $description);
+        $statement->bindParam(':title', $title);
+        $statement->bindParam(':description', $description);
+        $statement->bindParam(':id', $idTodo);
 
         // Je l'exécute
         $statement->execute();
