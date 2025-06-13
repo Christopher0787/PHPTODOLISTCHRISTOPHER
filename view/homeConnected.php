@@ -55,8 +55,8 @@
         <div id="todoRow">
             <a href="./readTodo.php?id=2">titre 1</a>
             <div> 
-                <a href="./updateTodo.php?id=6"><img src="../img/plume.png" alt="logo editer le todo"></a>
-                <a href="./deleteTodo.php?id=6"><img src="../img/poubelle.png" alt="Logo suppression todo"></a>
+                <a href="./updateTodo.php?id=6"><img src="../img/plume.png" alt="logo editer le todo" class="icone"></a>
+                <a href="./deleteTodo.php?id=6"><img src="../img/poubelle.png" alt="Logo suppression todo" class="icone"></a>
             </div>
         </div>
     </section>
