@@ -9,14 +9,17 @@
         header('location: ./signin.php');
         exit();
     }
+    $userId = $_SESSION['userId'];
 
     // Récupérer les 5 todoList les plus récents s'ils existent
-    $sql = "SELECT id, title FROM todo ORDER BY createdAt DESC LIMIT 5;";
+    $sql = "SELECT id, title FROM todo WHERE author = :userId ORDER BY createdAt DESC LIMIT 5;";
 
     // Si j'ai accès à une instance de connexion PDO, alors j'envoie ma requète
     if(isset($db_connexion)){
-        $statement = $db_connexion->query($sql);
+        $statement = $db_connexion->prepare($sql);
     }
+    $statement->bindParam(':userId', $userId);
+    $statement->execute();
 
     // Je récupère les 5 todos dans un tableau à indices ordonnées. Il est multidimensionnel.
     $todos = $statement->fetchAll();
